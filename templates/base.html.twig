@@ -1,16 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
         {% endblock %}
 
         {% block javascripts %}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
     </head>
-    <body>
-        {% block body %}{% endblock %}
+    <body class="bg-teal-100 dark:bg-gray-900">
+        <nav class="flex justify-between bg-teal-500 dark:bg-gray-700 p-3 items-center" aria-label="Tabs">
+            <div class="flex gap-3 items-center">
+                <a href="{{ path('home') }}" class="text-white text-xl shrink-0 rounded-lg p-2 font-medium hover:bg-teal-100 dark:hover:bg-gray-200 hover:text-gray-800 {{ app.current_route == 'home' ? 'underline' : '' }}">Accueil</a>
+            </div>
+            <div class="flex gap-3 items-center">
+        {#        <a href="{{ path('app_register') }}" class="text-white shrink-0 rounded-lg p-2 font-medium hover:bg-teal-100 dark:hover:bg-gray-200 hover:text-gray-800">Sign In</a>#}
+        {#        <a href="{{ path('admin.recipe.index') }}" class="shrink-0 flex justify-end bg-teal-500 text-white p-2 rounded-lg hover:bg-teal-800">Login</a>#}
+            </div>
+        </nav>
+        <div class="m-10">
+        {#    {% include 'partials/flash.html.twig' %}#}
+            {% block body %}{% endblock %}
+        </div>
     </body>
 </html>
