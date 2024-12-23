@@ -4,9 +4,13 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
+#[UniqueEntity('email')]
+#[UniqueEntity('nss')]
 class User
 {
     #[ORM\Id]
@@ -27,15 +31,18 @@ class User
     private ?bool $sex = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Regex('/[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/', message: 'Email Invalide')]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
     private ?string $adress = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Regex('/^[12]\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])\d{6}$/', message: 'Numéro de sécurité sociale Invalide')]
     private ?string $nss = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Regex('/^(\+33\s?[1-9](?:\s?\d{2}){4}|0[1-9](?:\s?\d{2}){4})$/', message: 'Numéro de téléphone Invalide')]
     private ?string $phone = null;
 
     #[ORM\Column(length: 255)]
