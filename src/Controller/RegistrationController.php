@@ -44,16 +44,17 @@ class RegistrationController extends AbstractController
             $intermittent = $form->get('intermittent')->getData();
 
             // encode the plain password
-            $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
-            $user->setFirstname($firstname);
-            $user->setLastname($lastname);
-            $user->setAge($age);
-            $user->setSex($sex);
-            $user->setAddress($address);
-            $user->setNss($nss);
-            $user->setPhoneNumber($phone_number);
-            $user->setLicence($licence);
-            $user->setIntermittent($intermittent);
+            $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword))
+                ->setFirstname($firstname)
+                ->setLastname($lastname)
+                ->setAge($age)
+                ->setSex($sex)
+                ->setAddress($address)
+                ->setNss($nss)
+                ->setPhoneNumber($phone_number)
+                ->setLicence($licence)
+                ->setIntermittent($intermittent)
+                ->setRoles([]);
 
             $entityManager->persist($user);
             $entityManager->flush();
