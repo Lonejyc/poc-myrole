@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\FilmRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: FilmRepository::class)]
 class Film
@@ -20,10 +21,11 @@ class Film
     private ?string $rcs = null;
 
     #[ORM\Column]
+    #[Assert\Positive()]
     private ?int $capital = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $adress = null;
+    private ?string $address = null;
 
     public function getId(): ?int
     {
@@ -66,14 +68,14 @@ class Film
         return $this;
     }
 
-    public function getAdress(): ?string
+    public function getAddress(): ?string
     {
-        return $this->adress;
+        return $this->address;
     }
 
-    public function setAdress(string $adress): static
+    public function setAddress(string $address): static
     {
-        $this->adress = $adress;
+        $this->address = $address;
 
         return $this;
     }

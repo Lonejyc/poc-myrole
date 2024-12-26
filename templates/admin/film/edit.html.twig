@@ -1,0 +1,19 @@
+{% extends 'admin/admin.html.twig' %}
+
+{% block title "Film : " ~ film.name %}
+
+{% block body %}
+    <h1 class="text-3xl dark:text-gray-200 mb-3">{{ film.name }}</h1>
+
+    {{ form_start(formContent) }}
+        {{ form_row(formContent.name, {
+            label: 'Nom du film',
+        }) }}
+        {{ form_row(formContent.rcs) }}
+        {{ form_row(formContent.capital) }}
+        {{ form_row(formContent.address, {
+            label: 'Adresse',
+        }) }}
+    {{ form_end(formContent) }}
+
+{% endblock %}
