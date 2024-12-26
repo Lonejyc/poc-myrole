@@ -4,19 +4,38 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-#[UniqueEntity('email')]
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[UniqueEntity('nss')]
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    #[ORM\Column(length: 180)]
+    #[Assert\Regex('/[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/', message: 'Email Invalide')]
+    private ?string $email = null;
+
+    /**
+     * @var list<string> The user roles
+     */
+    #[ORM\Column]
+    private array $roles = [];
+
+    /**
+     * @var string The hashed password
+     */
+    #[ORM\Column]
+    private ?string $password = null;
 
     #[ORM\Column(length: 255)]
     private ?string $firstname = null;
@@ -31,29 +50,98 @@ class User
     private ?bool $sex = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Regex('/[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/', message: 'Email Invalide')]
-    private ?string $email = null;
+    private ?string $address = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $adress = null;
-
-    #[ORM\Column(length: 255)]
-    #[Assert\Regex('/^[12]\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])\d{6}$/', message: 'Numéro de sécurité sociale Invalide')]
+    #[Assert\Regex('/^[12]\d{2}(0[1-9]|1[0-2])(0[1-9]|[1-8]\d|9[0-5])\d{3}\d{3}\d{2}$/', message: 'Numéro de sécurité sociale Invalide')]
     private ?string $nss = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\Regex('/^(\+33\s?[1-9](?:\s?\d{2}){4}|0[1-9](?:\s?\d{2}){4})$/', message: 'Numéro de téléphone Invalide')]
-    private ?string $phone = null;
+    private ?string $phone_number = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $permit = null;
+    private ?bool $licence = null;
+
+    #[ORM\Column(length: 255)]
+    private ?bool $intermittent = null;
 
     #[ORM\Column]
-    private ?bool $intermittent = null;
+    private bool $isVerified = false;
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): static
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     *
+     * @return list<string>
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    /**
+     * @param list<string> $roles
+     */
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): static
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
     public function getFirstname(): ?string
@@ -104,26 +192,14 @@ class User
         return $this;
     }
 
-    public function getEmail(): ?string
+    public function getAddress(): ?string
     {
-        return $this->email;
+        return $this->address;
     }
 
-    public function setEmail(string $email): static
+    public function setAddress(string $address): static
     {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getAdress(): ?string
-    {
-        return $this->adress;
-    }
-
-    public function setAdress(string $adress): static
-    {
-        $this->adress = $adress;
+        $this->address = $address;
 
         return $this;
     }
@@ -140,31 +216,31 @@ class User
         return $this;
     }
 
-    public function getPhone(): ?string
+    public function getPhoneNumber(): ?string
     {
-        return $this->phone;
+        return $this->phone_number;
     }
 
-    public function setPhone(string $phone): static
+    public function setPhoneNumber(string $phone_number): static
     {
-        $this->phone = $phone;
+        $this->phone_number = $phone_number;
 
         return $this;
     }
 
-    public function getPermit(): ?string
+    public function getLicence(): ?bool
     {
-        return $this->permit;
+        return $this->licence;
     }
 
-    public function setPermit(string $permit): static
+    public function setLicence(bool $licence): static
     {
-        $this->permit = $permit;
+        $this->licence = $licence;
 
         return $this;
     }
 
-    public function isIntermittent(): ?bool
+    public function getIntermittent(): ?bool
     {
         return $this->intermittent;
     }
@@ -172,6 +248,18 @@ class User
     public function setIntermittent(bool $intermittent): static
     {
         $this->intermittent = $intermittent;
+
+        return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setVerified(bool $isVerified): static
+    {
+        $this->isVerified = $isVerified;
 
         return $this;
     }

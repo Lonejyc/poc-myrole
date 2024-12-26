@@ -15,15 +15,15 @@
     <body class="bg-teal-100 dark:bg-gray-900">
         <nav class="flex justify-between bg-teal-500 dark:bg-gray-700 p-3 items-center" aria-label="Tabs">
             <div class="flex gap-3 items-center">
-                <a href="{{ path('home') }}" class="text-white text-xl shrink-0 rounded-lg p-2 font-medium hover:bg-teal-100 dark:hover:bg-gray-200 hover:text-gray-800 {{ app.current_route == 'home' ? 'underline' : '' }}">Accueil</a>
+                <a href="{{ path('app_home') }}" class="text-white text-xl shrink-0 rounded-lg p-2 font-medium hover:bg-teal-100 dark:hover:bg-gray-200 hover:text-gray-800 {{ app.current_route == 'home' ? 'underline' : '' }}">Accueil</a>
             </div>
             <div class="flex gap-3 items-center">
-        {#        <a href="{{ path('app_register') }}" class="text-white shrink-0 rounded-lg p-2 font-medium hover:bg-teal-100 dark:hover:bg-gray-200 hover:text-gray-800">Sign In</a>#}
+                <a href="{{ path('app_register') }}" class="text-white shrink-0 rounded-lg p-2 font-medium hover:bg-teal-100 dark:hover:bg-gray-200 hover:text-gray-800">Sign In</a>
         {#        <a href="{{ path('admin.recipe.index') }}" class="shrink-0 flex justify-end bg-teal-500 text-white p-2 rounded-lg hover:bg-teal-800">Login</a>#}
             </div>
         </nav>
         <div class="m-10">
-        {#    {% include 'partials/flash.html.twig' %}#}
+            {% include 'partials/flash.html.twig' %}
             {% block body %}{% endblock %}
         </div>
     </body>
