@@ -3,9 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Film;
-use App\Entity\Recipe;
 use App\Form\FilmType;
-use App\Form\RecipeType;
 use App\Repository\FilmRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

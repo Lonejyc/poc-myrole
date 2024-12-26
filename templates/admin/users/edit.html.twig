@@ -1,0 +1,10 @@
+{% extends 'admin/admin.html.twig' %}
+
+{% block title "Utilisateur : " ~ user.id %}
+
+{% block body %}
+    <h1 class="text-3xl dark:text-gray-200 mb-3">{{ user.id }}</h1>
+
+    {{ form(formContent) }}
+
+{% endblock %}

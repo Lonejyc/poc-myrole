@@ -16,7 +16,8 @@
         <nav class="flex justify-between bg-teal-500 dark:bg-gray-700 p-3 items-center" aria-label="Tabs">
             <div class="flex gap-3 items-center">
                 <a href="{{ path('admin.film.index') }}" class="text-white text-xl shrink-0 rounded-lg p-2 font-medium hover:bg-teal-100 dark:hover:bg-gray-200 hover:text-gray-800 {{ app.current_route == 'admin.' ? 'underline' : '' }}">Admin</a>
-                <a href="{{ path('admin.film.index') }}" class="shrink-0 rounded-lg p-2 font-small text-gray-200 hover:bg-teal-100 dark:hover:bg-gray-200 hover:text-gray-800 {{ app.current_route starts with 'admin.recipe.' ? 'underline' : '' }}">Films</a>
+                <a href="{{ path('admin.film.index') }}" class="shrink-0 rounded-lg p-2 font-small text-gray-200 hover:bg-teal-100 dark:hover:bg-gray-200 hover:text-gray-800 {{ app.current_route starts with 'admin.film.' ? 'underline' : '' }}">Films</a>
+                <a href="{{ path('admin.users.index') }}" class="shrink-0 rounded-lg p-2 font-small text-gray-200 hover:bg-teal-100 dark:hover:bg-gray-200 hover:text-gray-800 {{ app.current_route starts with 'admin.users.' ? 'underline' : '' }}">Utilisateurs</a>
             </div>
             <a href="{{ path('app_logout') }}" class="shrink-0 flex justify-end bg-rose-500 text-white p-2 rounded hover:bg-rose-800">Logout</a>
         </nav>
