@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\FilmRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -26,6 +28,17 @@ class Film
 
     #[ORM\Column(length: 255)]
     private ?string $address = null;
+
+    /**
+     * @var Collection<int, EmployeeGroup>
+     */
+    #[ORM\OneToMany(targetEntity: EmployeeGroup::class, mappedBy: 'film')]
+    private Collection $employee_groups;
+
+    public function __construct()
+    {
+        $this->employee_groups = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -76,6 +89,36 @@ class Film
     public function setAddress(string $address): static
     {
         $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, EmployeeGroup>
+     */
+    public function getEmployeeGroups(): Collection
+    {
+        return $this->employee_groups;
+    }
+
+    public function addEmployeeGroup(EmployeeGroup $employeeGroup): static
+    {
+        if (!$this->employee_groups->contains($employeeGroup)) {
+            $this->employee_groups->add($employeeGroup);
+            $employeeGroup->setFilm($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmployeeGroup(EmployeeGroup $employeeGroup): static
+    {
+        if ($this->employee_groups->removeElement($employeeGroup)) {
+            // set the owning side to null (unless already changed)
+            if ($employeeGroup->getFilm() === $this) {
+                $employeeGroup->setFilm(null);
+            }
+        }
 
         return $this;
     }

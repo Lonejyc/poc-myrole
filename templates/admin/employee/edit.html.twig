@@ -1,0 +1,15 @@
+{% extends 'admin/admin.html.twig' %}
+
+{% block title "Groupe d'employé : " ~ employee.name %}
+
+{% block body %}
+    <h1 class="text-3xl dark:text-gray-200 mb-3">{{ employee.name }}</h1>
+
+    {{ form_start(formContent) }}
+        {{ form_row(formContent.name, {
+            label: "Nom du groupe d'employés",
+        }) }}
+        {{ form_row(formContent.film) }}
+    {{ form_end(formContent) }}
+
+{% endblock %}

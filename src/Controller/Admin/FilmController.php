@@ -46,11 +46,11 @@ class FilmController extends AbstractController
     #[Route('/create', name: 'create')]
     public function create(Request $request, EntityManagerInterface $em)
     {
-        $recipe = new Film();
-        $form = $this->createForm(FilmType::class, $recipe);
+        $film = new Film();
+        $form = $this->createForm(FilmType::class, $film);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($recipe);
+            $em->persist($film);
             $em->flush();
             $this->addFlash('success', 'Film créée avec succès');
             return $this->redirectToRoute('admin.film.index');

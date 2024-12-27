@@ -1,10 +1,10 @@
 {% extends 'admin/admin.html.twig' %}
 
-{% block title "Tout les films" %}
+{% block title "Tout les groupes d'employés" %}
 
 {% block body %}
     <p class="my-5">
-        <a href="{{ path('admin.film.create') }}" class="text-white bg-teal-700 hover:bg-teal-800 focus:ring-4 focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-teal-600 dark:hover:bg-teal-700 focus:outline-none dark:focus:ring-teal-800">Créer un film</a>
+        <a href="{{ path('admin.employee_group.create') }}" class="text-white bg-teal-700 hover:bg-teal-800 focus:ring-4 focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-teal-600 dark:hover:bg-teal-700 focus:outline-none dark:focus:ring-teal-800">Créer un groupe d'employé</a>
     </p>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -12,7 +12,7 @@
             <tr class="dark:text-white text-xl">
                 <th scope="col" class="px-6 py-3 text-left dark:text-white">
                     <div class="flex items-center">
-                        {{ knp_pagination_sortable(films, 'ID', 'f.id') }}
+                        {{ knp_pagination_sortable(employees, 'ID', 'eg.id') }}
                         <svg class="w-3 h-3 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z"/>
                         </svg>
@@ -20,7 +20,15 @@
                 </th>
                 <th scope="col" class="px-6 py-3 text-left dark:text-white">
                     <div class="flex items-center">
-                        {{ knp_pagination_sortable(films, 'Titre', 'f.name') }}
+                        {{ knp_pagination_sortable(employees, 'Nom', 'eg.name') }}
+                        <svg class="w-3 h-3 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z"/>
+                        </svg>
+                    </div>
+                </th>
+                <th scope="col" class="px-6 py-3 text-left dark:text-white">
+                    <div class="flex items-center">
+                        {{ knp_pagination_sortable(employees, 'Films', 'f.title') }}
                         <svg class="w-3 h-3 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z"/>
                         </svg>
@@ -30,17 +38,20 @@
             </tr>
             </thead>
             <tbody>
-            {% for film in films %}
+            {% for employee in employees %}
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                     <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {{ film.id }}
+                        {{ employee.id }}
                     </th>
                     <td class="px-6 py-4">
-                        {{ film.name }}
+                        {{ employee.name }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ employee.film.name | default('') }}
                     </td>
                     <td class="px-6 py-4 flex gap-2 justify-end">
-                        <a href="{{ path('admin.film.edit', {id: film.id}) }}" class="text-white bg-teal-700 hover:bg-teal-800 focus:ring-4 focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-teal-600 dark:hover:bg-teal-700 focus:outline-none dark:focus:ring-teal-800">Éditer</a>
-                        <form action="{{ path('admin.film.delete', {id: film.id}) }}" method="post">
+                        <a href="{{ path('admin.employee_group.edit', {id: employee.id}) }}" class="text-white bg-teal-700 hover:bg-teal-800 focus:ring-4 focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-teal-600 dark:hover:bg-teal-700 focus:outline-none dark:focus:ring-teal-800">Éditer</a>
+                        <form action="{{ path('admin.employee_group.delete', {id: employee.id}) }}" method="post">
                             <input type="hidden" name="_method" value="DELETE">
                             <button type="submit" class="text-white bg-rose-700 hover:bg-rose-800 focus:ring-4 focus:ring-rose-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-rose-600 dark:hover:bg-rose-700 focus:outline-none dark:focus:ring-rose-800">Supprimer</button>
                         </form>
@@ -51,7 +62,7 @@
         </table>
     </div>
     <div class="mt-8 flex justify-center gap-3">
-        {{ knp_pagination_render(films) }}
+        {{ knp_pagination_render(employees) }}
     </div>
     {#    <div class="mt-8 flex justify-center gap-3">#}
     {#        {% if page > 1 %}#}
