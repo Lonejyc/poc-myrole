@@ -4,9 +4,12 @@ namespace App\Form;
 
 use App\Entity\EmployeeGroup;
 use App\Entity\Film;
+use App\Entity\User;
+use phpDocumentor\Reflection\Types\Collection;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -24,6 +27,16 @@ class EmployeeGroupType extends AbstractType
                 'class' => Film::class,
                 'choice_label' => 'name',
                 'expanded' => true,
+            ])
+            ->add('users', EntityType::class, [
+                'class' => User::class,
+                'choice_label'
+                => function(User $user) {
+                    return $user->getFirstname() . ' ' . $user->getLastname();
+                },
+                'expanded' => true,
+                'multiple' => true,
+                'by_reference' => false,
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Envoyer',

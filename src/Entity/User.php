@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use phpDocumentor\Reflection\Types\Boolean;
@@ -14,6 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[UniqueEntity('nss')]
+#[ApiResource()]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -53,7 +55,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $address = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Regex('/^[12]\d{2}(0[1-9]|1[0-2])(0[1-9]|[1-8]\d|9[0-5])\d{3}\d{3}\d{2}$/', message: 'Numéro de sécurité sociale Invalide')]
+//    #[Assert\Regex('/^[12]\d{2}(0[1-9]|1[0-2])(0[1-9]|[1-8]\d|9[0-5])\d{3}\d{3}\d{2}$/', message: 'Numéro de sécurité sociale Invalide')]
     private ?string $nss = null;
 
     #[ORM\Column(length: 255)]

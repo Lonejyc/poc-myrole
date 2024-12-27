@@ -29,8 +29,8 @@ class UserType extends AbstractType
             ->add('age')
             ->add('sex', ChoiceType::class, [
                 'choices' => [
-                    'Homme' => 'false',
-                    'Femme' => 'true',
+                    'Homme' => false,
+                    'Femme' => true,
                 ],
                 'multiple' => false,
                 'expanded' => false,
@@ -40,16 +40,16 @@ class UserType extends AbstractType
             ->add('phone_number')
             ->add('licence', ChoiceType::class, [
                 'choices' => [
-                    'Oui' => 'true',
-                    'Non' => 'false',
+                    'Oui' => true,
+                    'Non' => false,
                 ],
                 'multiple' => false,
                 'expanded' => false,
             ])
             ->add('intermittent', ChoiceType::class, [
                 'choices' => [
-                    'Oui' => 'true',
-                    'Non' => 'false',
+                    'Oui' => true,
+                    'Non' => false,
                 ],
                 'multiple' => false,
                 'expanded' => false,
