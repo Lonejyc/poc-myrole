@@ -9,7 +9,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ApiResource()]
 #[ORM\Entity(repositoryClass: FilmRepository::class)]
 class Film
 {

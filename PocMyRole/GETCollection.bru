@@ -1,0 +1,23 @@
+meta {
+  name: GETCollection
+  type: http
+  seq: 3
+}
+
+get {
+  url: http://poc-myrole.test/api/contracts
+  body: json
+  auth: none
+}
+
+headers {
+  content-type: application/ld+json
+}
+
+body:json {
+  {
+    "start_date": "2024-12-30T09:51:29.691Z",
+    "end_date": "2024-12-30T09:51:29.691Z",
+    "user": "/api/users/11"
+  }
+}

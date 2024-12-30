@@ -26,6 +26,14 @@ class Contract
     #[ORM\Column]
     private ?int $wage = null;
 
+    #[ORM\ManyToOne(inversedBy: 'contracts')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user_contract = null;
+
+    #[ORM\ManyToOne(inversedBy: 'contracts')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?EmployeeGroup $employee_group = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +83,30 @@ class Contract
     public function setWage(int $wage): static
     {
         $this->wage = $wage;
+
+        return $this;
+    }
+
+    public function getUserContract(): ?User
+    {
+        return $this->user_contract;
+    }
+
+    public function setUserContract(?User $user_contract): static
+    {
+        $this->user_contract = $user_contract;
+
+        return $this;
+    }
+
+    public function getEmployeeGroup(): ?EmployeeGroup
+    {
+        return $this->employee_group;
+    }
+
+    public function setEmployeeGroup(?EmployeeGroup $employee_group): static
+    {
+        $this->employee_group = $employee_group;
 
         return $this;
     }

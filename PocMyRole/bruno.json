@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "PocMyRole",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

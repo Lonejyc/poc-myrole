@@ -8,8 +8,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ApiResource()]
 #[ORM\Entity(repositoryClass: EmployeeGroupRepository::class)]
+#[ApiResource()]
 class EmployeeGroup
 {
     #[ORM\Id]
@@ -29,9 +29,16 @@ class EmployeeGroup
     #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'employee_group')]
     private Collection $users;
 
+    /**
+     * @var Collection<int, Contract>
+     */
+    #[ORM\OneToMany(targetEntity: Contract::class, mappedBy: 'employee_group')]
+    private Collection $contracts;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->contracts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -87,6 +94,36 @@ class EmployeeGroup
             // set the owning side to null (unless already changed)
             if ($user->getEmployeeGroup() === $this) {
                 $user->setEmployeeGroup(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Contract>
+     */
+    public function getContracts(): Collection
+    {
+        return $this->contracts;
+    }
+
+    public function addContract(Contract $contract): static
+    {
+        if (!$this->contracts->contains($contract)) {
+            $this->contracts->add($contract);
+            $contract->setEmployeeGroup($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContract(Contract $contract): static
+    {
+        if ($this->contracts->removeElement($contract)) {
+            // set the owning side to null (unless already changed)
+            if ($contract->getEmployeeGroup() === $this) {
+                $contract->setEmployeeGroup(null);
             }
         }
 
