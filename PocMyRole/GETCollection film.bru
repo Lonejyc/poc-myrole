@@ -1,0 +1,15 @@
+meta {
+  name: GETCollection film
+  type: http
+  seq: 4
+}
+
+get {
+  url: http://poc-myrole.test/api/movie/1/contracts
+  body: json
+  auth: none
+}
+
+headers {
+  content-type: application/ld+json
+}

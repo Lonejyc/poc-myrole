@@ -37,11 +37,12 @@ class ContractResourceProvider implements ProviderInterface
 
             return $resources;
         }
-
-        $contract = $this->itemProvider->provide($operation, $uriVariables, $context);
         if($operation instanceof Post) {
             return null;
         }
+
+        $contract = $this->itemProvider->provide($operation, $uriVariables, $context);
+
         if (!isset($contract)) {
             throw new NotFoundHttpException("Contract not found");
         }

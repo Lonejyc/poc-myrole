@@ -12,6 +12,7 @@ use App\ApiResource\ContractResource;
 use App\Entity\Contract;
 use App\Repository\EmployeeGroupRepository;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use App\Exceptions\ContractOverlapException;
 
 class ContractResourceProcessor implements ProcessorInterface
 {
@@ -39,7 +40,7 @@ class ContractResourceProcessor implements ProcessorInterface
                         ($data->end_date >= $existingContract->getStartDate() && $data->end_date <= $existingContract->getEndDate()) ||
                         ($data->start_date <= $existingContract->getStartDate() && $data->end_date >= $existingContract->getEndDate())
                     ) {
-                        throw new \Exception('The new contract period overlaps with an existing contract.');
+                        throw new ContractOverlapException();
                     }
                 }
             }
