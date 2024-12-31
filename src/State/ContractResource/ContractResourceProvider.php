@@ -62,6 +62,8 @@ class ContractResourceProvider implements ProviderInterface
         $contractResource->employee_group = $contract->getEmployeeGroup();
         $contractResource->contract = $contract;
 
+
+
         return $contractResource;
     }
 }

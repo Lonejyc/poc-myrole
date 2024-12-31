@@ -1,0 +1,15 @@
+meta {
+  name: GET stats
+  type: http
+  seq: 6
+}
+
+get {
+  url: http://poc-myrole.test/api/movie/1/stats
+  body: json
+  auth: none
+}
+
+headers {
+  content-type: application/ld+json
+}

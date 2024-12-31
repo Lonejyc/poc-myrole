@@ -10,12 +10,14 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Link;
+use App\Dto\ContractStatsDto;
 use App\Entity\Contract;
 use App\Entity\EmployeeGroup;
 use App\Entity\Film;
 use App\Entity\User;
 use App\State\ContractResource\ContractResourceProcessor;
 use App\State\ContractResource\ContractResourceProvider;
+use App\State\ContractResource\ContractStatsResourceProvider;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Serializer\Attribute\Groups;
 
@@ -33,6 +35,17 @@ use Symfony\Component\Serializer\Attribute\Groups;
             ]
         ),
         new Get(),
+        new Get(
+            uriTemplate: '/movie/{movie_id}/stats',
+            uriVariables: [
+                'movie_id' => new Link(
+                    toProperty: 'film',
+                    fromClass: Film::class
+                )
+            ],
+            output: ContractStatsDto::class,
+            provider: ContractStatsResourceProvider::class
+        ),
         new Post(
             uriTemplate: '/contracts/{group_employee_id}',
             uriVariables: [
@@ -44,7 +57,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
         ),
         new Delete(),
     ],
-    normalizationContext: ['groups' => 'read'],
+    normalizationContext: ['groups' => ['read', 'stats']],
     provider: ContractResourceProvider::class,
     processor: ContractResourceProcessor::class,
     stateOptions: new Options(entityClass: Contract::class, handleLinks: [ContractResource::class, 'handleLinks']),
@@ -64,8 +77,10 @@ class ContractResource
     public ?string $job;
     #[Groups('read')]
     public ?int $wage;
+
     #[Groups('read')]
     public ?EmployeeGroup $employee_group;
+
     #[Groups('read')]
     public ?Film $film;
     public Contract $contract;
